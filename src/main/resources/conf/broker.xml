@@ -20,20 +20,73 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <!-- Allows us to use system properties as variables in this configuration file -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+
     <broker xmlns="http://activemq.apache.org/schema/core"
             brokerName="perfbroker-1"
             dataDirectory="target/activemq-data/data"
             persistent="true"
+            advisorySupport="false"
+            enableStatistics="false"
+            schedulerSupport="false"
             deleteAllMessagesOnStartup="true">
 
+        <!-- 
+            Use VM cursor
+
+            For more information, see:           
+            http://activemq.apache.org/message-cursors.html
+        -->
+        <destinationPolicy>
+            <policyMap>
+              <policyEntries>
+                <policyEntry topic=">" producerFlowControl="true" memoryLimit="100mb">
+                  <pendingSubscriberPolicy>
+                    <vmCursor />
+                  </pendingSubscriberPolicy>
+                </policyEntry>
+                <policyEntry queue=">" producerFlowControl="true" memoryLimit="100mb">
+                  <pendingQueuePolicy>
+                    <vmQueueCursor/>
+                  </pendingQueuePolicy>
+                </policyEntry>
+              </policyEntries>
+            </policyMap>
+        </destinationPolicy> 
+
+        <!-- 
+            Use KahaDB for persistence
+
+            For more information, see:            
+            http://activemq.apache.org/kahadb.html
+        -->
         <persistenceAdapter>
             <kahaDB directory="target/activemq-data/kahadb"
-                    checkpointInterval="1800000"
-                    enableIndexWriteAsync="true"
-                    indexWriteBatchSize="10000"
-                    indexCacheSize="100000"/>
+                    cleanupInterval="300000"
+                    checkpointInterval="50000"
+                    journalMaxWriteBatchSize="62k"
+                    journalMaxFileLength="1g"
+                    indexCacheSize="100000"
+                    indexWriteBatchSize="100000"/>
         </persistenceAdapter>
 
+        <!-- ensure there is loads of memory for destinations -->
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage limit="2g"/>
+                </memoryUsage>
+            </systemUsage>
+        </systemUsage>
+
+        <!-- 
+            Use TCP transport 
+
+            For more information, see:            
+            http://activemq.apache.org/configuring-transports.html
+        -->
         <transportConnectors>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616"/>
         </transportConnectors>
