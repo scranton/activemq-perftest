@@ -16,9 +16,6 @@
 #    limitations under the License.
 #
 
-#export MAVEN_OPTS="-Xmx2g -Xms1g -XX:+UseLargePages"
-export MAVEN_OPTS="-Xmx2g -Xms2g"
-
 #ACTIVEMQ_VERSION=5.3.2
 ACTIVEMQ_VERSION=5.4.2-fuse-02-00
 
@@ -32,6 +29,8 @@ ACTIVEMQ_CONFIG=activemq-specjms
 REPORT_BASE_DIR="report/${ACTIVEMQ_VERSION}/${ACTIVEMQ_CONFIG}"
 mkdir -p ${REPORT_BASE_DIR}
 
+#export MAVEN_OPTS="-Xmx2g -Xms1g -XX:+UseLargePages"
+export MAVEN_OPTS="-Xmx2g -Xms2g"
 mvn -Dactivemq.version=${ACTIVEMQ_VERSION} activemq:run -DconfigUri=xbean:file:src/main/resources/conf/${ACTIVEMQ_CONFIG}.xml -Dorg.apache.activemq.UseDedicatedTaskRunner=false &> ${REPORT_BASE_DIR}/JmsBroker_console.log &
 echo $! > broker.pid
 
@@ -49,6 +48,7 @@ do
 		for MSG_SIZE in 1024 2048
 		do
 
+			export MAVEN_OPTS="-Xmx1g -Xms1g"
 			mvn -Dactivemq.version=${ACTIVEMQ_VERSION} activemq-perf:consumer "-DsysTest.reportDir=${REPORT_DIR}" -DsysTest.numClients=${NUM_CLIENTS} -Dconsumer.durable=true &> "${REPORT_DIR}/JmsConsumer_${NUM_CLIENTS}pub_${NUM_CLIENTS}sub_${MSG_SIZE}size_console.log" &
 			mvn -Dactivemq.version=${ACTIVEMQ_VERSION} activemq-perf:producer "-DsysTest.reportDir=${REPORT_DIR}" -DsysTest.numClients=${NUM_CLIENTS} -Dproducer.messageSize=${MSG_SIZE} -Dfactory.useAsyncSend=false -Dproducer.deliveryMode=${DELIVERY_MODE} &> "${REPORT_DIR}/JmsProducer_${NUM_CLIENTS}pub_${NUM_CLIENTS}sub_${MSG_SIZE}size_console.log"
 
