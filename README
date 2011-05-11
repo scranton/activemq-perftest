@@ -1,0 +1,23 @@
+ActiveMQ Performance Test
+
+This project shows using the maven-activemq-perf-plugin to performance test ActiveMQ.
+This assumes you have Maven 2.2.1 or later installed.
+
+Note: tweak memory settings based on test system's capacity
+
+To start the Broker from this project's directory
+
+> export MAVEN_OPTS="-Xmx3g -Xms2g"
+> mvn activemq:run -DconfigUri=xbean:file:src/main/resources/conf/activemq-specjms.xml -Dorg.apache.activemq.UseDedicatedTaskRunner=false
+
+
+To start the consumer(s)
+
+> export MAVEN_OPTS="-Xmx2g -Xms1g"
+> mvn activemq-perf:consumer -Dfactory.brokerURL=tcp://<host>:61616 -DsysTest.numClients=<num client threads> -Dconsumer.durable=true
+
+
+To start the producers(s)
+
+> export MAVEN_OPTS="-Xmx2g -Xms1g"
+> mvn activemq-perf:producer -Dfactory.brokerURL=tcp://<host>:61616 -DsysTest.numClients=<num client threads> -Dproducer.messageSize=<msg size in bytes> -Dfactory.useAsyncSend=false -Dproducer.deliveryMode=<persistent|nonpersistent>
