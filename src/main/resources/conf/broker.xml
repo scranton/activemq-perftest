@@ -63,13 +63,10 @@
             http://activemq.apache.org/kahadb.html
         -->
         <persistenceAdapter>
-            <kahaDB directory="target/activemq-data/kahadb"
-                    cleanupInterval="300000"
-                    checkpointInterval="50000"
-                    journalMaxWriteBatchSize="62k"
-                    journalMaxFileLength="1g"
-                    indexCacheSize="100000"
-                    indexWriteBatchSize="100000"/>
+            <amqPersistenceAdapter directory="target/activemq-data/kahadb"/>
+<!--
+            <kahaDB directory="target/activemq-data/kahadb"/>
+-->
         </persistenceAdapter>
 
         <!-- ensure there is loads of memory for destinations -->
