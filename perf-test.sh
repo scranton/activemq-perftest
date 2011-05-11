@@ -41,7 +41,7 @@ sleep 30
 for DELIVERY_MODE in "nonpersistent" "persistent"
 do
 
-	REPORT_DIR="${REPORT_BASE_DIR}/${DELIVERY_MODE}"
+	REPORT_DIR="${REPORT_BASE_DIR}/${DELIVERY_MODE}/"
 	mkdir -p ${REPORT_DIR}
 
 	for NUM_CLIENTS in 1 10
