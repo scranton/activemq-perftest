@@ -63,10 +63,10 @@
             http://activemq.apache.org/kahadb.html
         -->
         <persistenceAdapter>
-            <amqPersistenceAdapter directory="target/activemq-data/kahadb"/>
 <!--
-            <kahaDB directory="target/activemq-data/kahadb"/>
+            <amqPersistenceAdapter directory="target/activemq-data/kahadb"/>
 -->
+            <kahaDB directory="target/activemq-data/kahadb"/>
         </persistenceAdapter>
 
         <!-- ensure there is loads of memory for destinations -->

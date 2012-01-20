@@ -25,10 +25,7 @@
     <version>1.0</version>
 
     <properties>
-        <!--
-        <activemq.version>5.4.2-fuse-02-00</activemq.version>
-        -->
-        <activemq.version>5.5.0</activemq.version>
+        <activemq.version>5.5.1-fuse-01-13</activemq.version>
         <slf4j.version>1.5.11</slf4j.version>
     </properties>
 
@@ -44,13 +41,6 @@
                     <groupId>org.apache.activemq.tooling</groupId>
                     <artifactId>maven-activemq-plugin</artifactId>
                     <version>${activemq.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.slf4j</groupId>
-                            <artifactId>slf4j-log4j12</artifactId>
-                            <version>${slf4j.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -62,29 +52,15 @@
             <artifactId>activemq-core</artifactId>
             <version>${activemq.version}</version>
         </dependency>
+<!--
         <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
             <version>3.7</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
+-->
     </dependencies>
 
-    <!--
         <repositories>
             <repository>
                 <id>release.fusesource.org</id>
@@ -112,6 +88,5 @@
                 </releases>
             </pluginRepository>
         </pluginRepositories>
-    -->
 
 </project>

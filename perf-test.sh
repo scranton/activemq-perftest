@@ -17,7 +17,7 @@
 #
 
 #ACTIVEMQ_VERSION=5.3.2
-ACTIVEMQ_VERSION=5.4.2-fuse-02-00
+ACTIVEMQ_VERSION=5.5.1-fuse-01-13
 
 #
 # Broker config file using the pattern
